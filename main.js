@@ -62,5 +62,23 @@ async function loadData(url) {
     let geojson = await response.json();
 
     // Wetterstationen mit Icons und Popups implementieren
+    // Workload 7: Franz Gatt
+    
+    let marker = L.geoJSON(geojson, {
+        pointToLayer: function (geoJsonPoint, latlng) {
+            
+            let popup = `
+                <strong>${geoJsonPoint.properties.Wetterstationen}</strong><br>
+                Seehöhe: ${geoJsonPoint.properties.Schneehöhe}<br>
+            `;
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: `icons/wifi.png`,
+                    iconAnchor: [16, 37],
+                    popupAnchor: [0, -37]
+                })
+            }).bindPopup(popup);
+        }
+    }).addTo(overlay);
 }
 loadData("https://static.avalanche.report/weather_stations/stations.geojson");
