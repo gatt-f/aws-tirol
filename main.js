@@ -63,7 +63,11 @@ async function loadData(url) {
 
     // Wetterstationen mit Icons und Popups implementieren
     // Workload 7: Franz Gatt
-    
+
+    let overlay = L.featureGroup()
+    layerControl.addOverlay(overlay, "Wetterstationen");
+    overlay.addTo(map);
+
     let marker = L.geoJSON(geojson, {
         pointToLayer: function (geoJsonPoint, latlng) {
             
