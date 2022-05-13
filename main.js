@@ -1,4 +1,5 @@
 /* Wetterstationen Tirol Beispiel */
+// Workload 7 - Franz Gatt
 
 let innsbruck = {
     lat: 47.267222,
