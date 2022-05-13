@@ -64,8 +64,8 @@ async function loadData(url) {
     // Wetterstationen mit Icons und Popups implementieren
     // Workload 7: Franz Gatt
 
-    console.log(geojson);
-    
+    //console.log(geojson);
+
     let overlay = L.featureGroup()
     layerControl.addOverlay(overlay, "Wetterstationen");
     overlay.addTo(map);
@@ -74,8 +74,8 @@ async function loadData(url) {
         pointToLayer: function (geoJsonPoint, latlng) {
             
             let popup = `
-                <strong>${geoJsonPoint.properties.Wetterstationen}</strong><br>
-                Seehöhe: ${geoJsonPoint.properties.Schneehöhe}<br>
+                <strong>${geoJsonPoint.properties.name}</strong><br>
+                Seehöhe: ${geoJsonPoint.geometry.coordinates}m<br>
             `;
             return L.marker(latlng, {
                 icon: L.icon({
