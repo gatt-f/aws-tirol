@@ -74,8 +74,8 @@ async function loadData(url) {
         pointToLayer: function (geoJsonPoint, latlng) {
             
             let popup = `
-                <strong>${geoJsonPoint.properties.name}</strong><br>
-                Seehöhe: ${geoJsonPoint.geometry.coordinates}m<br>
+                <strong>${geoJsonPoint.properties.name}</strong>
+                (${geoJsonPoint.geometry.coordinates[2]}m)<br>
             `;
             return L.marker(latlng, {
                 icon: L.icon({
