@@ -152,7 +152,7 @@ let drawSnowheight = function(geojson) {
 let drawWind = function(geojson) {
     L.geoJSON(geojson, {
         filter: function(geoJsonPoint) {
-            if (geoJsonPoint.properties.HS > 0 && geoJsonPoint.properties.HS < 15000) {
+            if (geoJsonPoint.properties.WG > 0 && geoJsonPoint.properties.WG < 15000) {
                 return true;
             }
         },
@@ -162,8 +162,8 @@ let drawWind = function(geojson) {
                  (${geoJsonPoint.geometry.coordinates[2]}m)<br>
              `;
              let color = getColor(
-                geoJsonPoint.properties.HS,
-                COLORS.snowheight
+                geoJsonPoint.properties.WG,
+                COLORS.wind
              );
              // console.log(geoJsonPoint.properties.LT, color);
 
@@ -171,11 +171,11 @@ let drawWind = function(geojson) {
             return L.marker(latlng, {
                 icon: L.divIcon({
                     className: "aws-div-icon",
-                    html: `<span style="background-color:${color}">${geoJsonPoint.properties.HS.toFixed(0)}</span>`
+                    html: `<span style="background-color:${color}">${geoJsonPoint.properties.WG.toFixed(0)}</span>`
                 })
             }).bindPopup(popup);
         }
-    }).addTo(overlays.snowheight);
+    }).addTo(overlays.wind);
 }
 
 // Wetterstationen
@@ -186,6 +186,7 @@ async function loadData(url) {
     drawStations(geojson);
     drawTemperature(geojson);
     drawSnowheight(geojson);
+    drawWind(geojson);
 }
 // Server lässt Nutzung der Daten nicht zu: loadData("https://lawine.tirol.gv.at/data/produkte/ogd.geojson");
 loadData("https://static.avalanche.report/weather_stations/stations.geojson");
