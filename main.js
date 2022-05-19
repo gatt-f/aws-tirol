@@ -106,8 +106,8 @@ let drawTemperature = function (geojson) {
                 COLORS.temperature
              );
              console.log(geoJsonPoint.properties.LT, color);
-             
-             // L.marker(latlng).addTo(map);
+
+             // Provisorischer Marker: L.marker(latlng).addTo(map);
             return L.marker(latlng, {
                 icon: L.divIcon({
                     className: "aws-div-icon",
@@ -118,6 +118,36 @@ let drawTemperature = function (geojson) {
     }).addTo(overlays.temperature);
 }
 
+// Schneehöhen 
+let drawSnowheight = function(geojson) {
+    L.geoJSON(geojson, {
+        filter: function(geoJsonPoint) {
+            if (geoJsonPoint.properties.HS > 0 && geoJsonPoint.properties.HS < 15000) {
+                return true;
+            }
+        },
+        pointToLayer: function (geoJsonPoint, latlng) {
+            let popup = `
+                 <strong>${geoJsonPoint.properties.name}</strong>
+                 (${geoJsonPoint.geometry.coordinates[2]}m)<br>
+             `;
+             let color = getColor(
+                geoJsonPoint.properties.HS,
+                COLORS.snowheight
+             );
+             // console.log(geoJsonPoint.properties.LT, color);
+
+             // Provisorischer Marker: L.marker(latlng).addTo(map);
+            return L.marker(latlng, {
+                icon: L.divIcon({
+                    className: "aws-div-icon",
+                    html: `<span style="background-color:${color}">${geoJsonPoint.properties.HS.toFixed(0)}</span>`
+                })
+            }).bindPopup(popup);
+        }
+    }).addTo(overlays.snowheight);
+}
+
 // Wetterstationen
 async function loadData(url) {
     let response = await fetch(url);
@@ -125,6 +155,7 @@ async function loadData(url) {
 
     drawStations(geojson);
     drawTemperature(geojson);
+    drawSnowheight(geojson);
 }
 // Server lässt Nutzung der Daten nicht zu: loadData("https://lawine.tirol.gv.at/data/produkte/ogd.geojson");
 loadData("https://static.avalanche.report/weather_stations/stations.geojson");
