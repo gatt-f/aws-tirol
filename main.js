@@ -56,11 +56,10 @@ L.control.fullscreen().addTo(map);
 // Wetterstationslayer beim Laden anzeigen
 overlays.stations.addTo(map);
 
-// Stationen
+// Wetterstationen mit Icons und Popups
 let drawStations = function(geojson){
    L.geoJSON(geojson, {
         pointToLayer: function (geoJsonPoint, latlng) {
-            
             let popup = `
                 <strong>${geoJsonPoint.properties.name}</strong>
                 (${geoJsonPoint.geometry.coordinates[2]}m)<br>
@@ -76,12 +75,32 @@ let drawStations = function(geojson){
     }).addTo(overlays.stations);
 }
 
+// Temperatur
+let drawTemperature = function(geojson){
+    L.geoJSON(geojson, {
+         pointToLayer: function (geoJsonPoint, latlng) {
+             let popup = `
+                 <strong>${geoJsonPoint.properties.name}</strong>
+                 (${geoJsonPoint.geometry.coordinates[2]}m)<br>
+             `;
+             return L.marker(latlng, {
+                 icon: L.icon({
+                     iconUrl: `icons/wifi.png`,
+                     iconAnchor: [16, 37],
+                     popupAnchor: [0, -37]
+                 })
+             }).bindPopup(popup);
+         }
+     }).addTo(overlays.temperature);
+ }
+
 // Wetterstationen
 async function loadData(url) {
     let response = await fetch(url);
     let geojson = await response.json();
 
     drawStations(geojson);
+    drawTemperature(geojson);
 }
 // Server lässt Nutzung der Daten nicht zu: loadData("https://lawine.tirol.gv.at/data/produkte/ogd.geojson");
 loadData("https://static.avalanche.report/weather_stations/stations.geojson");
