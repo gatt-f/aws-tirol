@@ -57,8 +57,8 @@ L.control.fullscreen().addTo(map);
 overlays.temperature.addTo(map);
 
 // Wetterstationen mit Icons und Popups
-let drawStations = function(geojson){
-   L.geoJSON(geojson, {
+let drawStations = function (geojson) {
+    L.geoJSON(geojson, {
         pointToLayer: function (geoJsonPoint, latlng) {
             let popup = `
                 <strong>${geoJsonPoint.properties.name}</strong>
@@ -76,23 +76,22 @@ let drawStations = function(geojson){
 }
 
 // Temperatur
-let drawTemperature = function(geojson){
+let drawTemperature = function (geojson) {
     L.geoJSON(geojson, {
-         pointToLayer: function (geoJsonPoint, latlng) {
-             let popup = `
+        pointToLayer: function (geoJsonPoint, latlng) {
+            let popup = `
                  <strong>${geoJsonPoint.properties.name}</strong>
                  (${geoJsonPoint.geometry.coordinates[2]}m)<br>
              `;
-             return L.marker(latlng, {
-                 icon: L.icon({
-                     iconUrl: `icons/wifi.png`,
-                     iconAnchor: [16, 37],
-                     popupAnchor: [0, -37]
-                 })
-             }).bindPopup(popup);
-         }
-     }).addTo(overlays.temperature);
- }
+            return L.marker(latlng, {
+                icon: L.divIcon({
+                    className: "aws-div-icon",
+                    html: `<span>${geoJsonPoint.properties.LT}</span>`
+                })
+            }).bindPopup(popup);
+        }
+    }).addTo(overlays.temperature);
+}
 
 // Wetterstationen
 async function loadData(url) {
