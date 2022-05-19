@@ -148,6 +148,36 @@ let drawSnowheight = function(geojson) {
     }).addTo(overlays.snowheight);
 }
 
+// Wind
+let drawWind = function(geojson) {
+    L.geoJSON(geojson, {
+        filter: function(geoJsonPoint) {
+            if (geoJsonPoint.properties.HS > 0 && geoJsonPoint.properties.HS < 15000) {
+                return true;
+            }
+        },
+        pointToLayer: function (geoJsonPoint, latlng) {
+            let popup = `
+                 <strong>${geoJsonPoint.properties.name}</strong>
+                 (${geoJsonPoint.geometry.coordinates[2]}m)<br>
+             `;
+             let color = getColor(
+                geoJsonPoint.properties.HS,
+                COLORS.snowheight
+             );
+             // console.log(geoJsonPoint.properties.LT, color);
+
+             // Provisorischer Marker: L.marker(latlng).addTo(map);
+            return L.marker(latlng, {
+                icon: L.divIcon({
+                    className: "aws-div-icon",
+                    html: `<span style="background-color:${color}">${geoJsonPoint.properties.HS.toFixed(0)}</span>`
+                })
+            }).bindPopup(popup);
+        }
+    }).addTo(overlays.snowheight);
+}
+
 // Wetterstationen
 async function loadData(url) {
     let response = await fetch(url);
