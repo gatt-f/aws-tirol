@@ -152,7 +152,7 @@ let drawSnowheight = function (geojson) {
 let drawWind = function (geojson) {
     L.geoJSON(geojson, {
         filter: function (geoJsonPoint) {
-            if (geoJsonPoint.properties.WG > 0 && geoJsonPoint.properties.WG < 15000) {
+            if (geoJsonPoint.properties.WG > 0 && geoJsonPoint.properties.WG < 300) {
                 return true;
             }
         },
