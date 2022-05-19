@@ -66,7 +66,7 @@ let getColor = function(value, ramp) {
         }
     }
 };
-console.log(getColor(-40, COLORS.temperature));
+// console.log(getColor(-40, COLORS.temperature));
 
 
 // Wetterstationen mit Icons und Popups
@@ -101,6 +101,11 @@ let drawTemperature = function (geojson) {
                  <strong>${geoJsonPoint.properties.name}</strong>
                  (${geoJsonPoint.geometry.coordinates[2]}m)<br>
              `;
+             let color = getColor(
+                geoJsonPoint.properties.LT,
+                COLORS.temperature
+             );
+             console.log(geoJsonPoint.properties.LT, color);
             return L.marker(latlng, {
                 icon: L.divIcon({
                     className: "aws-div-icon",
