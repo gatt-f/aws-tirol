@@ -56,21 +56,9 @@ L.control.fullscreen().addTo(map);
 // Wetterstationslayer beim Laden anzeigen
 overlays.stations.addTo(map);
 
-// Wetterstationen
-async function loadData(url) {
-    let response = await fetch(url);
-    let geojson = await response.json();
-
-    // Wetterstationen mit Icons und Popups implementieren
-    // Workload 7: Franz Gatt
-
-    // console.log(geojson);
-
-    let overlay = L.featureGroup()
-    // layerControl.addOverlay(overlay, "Wetterstationen");
-    overlay.addTo(map);
-
-    let marker = L.geoJSON(geojson, {
+// Stationen
+let drawStations = function(geojson){
+   L.geoJSON(geojson, {
         pointToLayer: function (geoJsonPoint, latlng) {
             
             let popup = `
@@ -85,6 +73,15 @@ async function loadData(url) {
                 })
             }).bindPopup(popup);
         }
-    }).addTo(overlay);
+    }).addTo(overlays.stations);
 }
+
+// Wetterstationen
+async function loadData(url) {
+    let response = await fetch(url);
+    let geojson = await response.json();
+
+    drawStations(geojson);
+}
+// Server lässt Nutzung der Daten nicht zu: loadData("https://lawine.tirol.gv.at/data/produkte/ogd.geojson");
 loadData("https://static.avalanche.report/weather_stations/stations.geojson");
