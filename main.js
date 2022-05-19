@@ -57,11 +57,11 @@ L.control.fullscreen().addTo(map);
 overlays.temperature.addTo(map);
 
 // Farben nach Wert und Schwellen ermitteln
-let getColor = function(value, ramp) {
+let getColor = function (value, ramp) {
     // console.log(value,ramp);
     for (let rule of ramp) {
         // console.log(rule)
-        if (value >= rule.min && value < rule.max){
+        if (value >= rule.min && value < rule.max) {
             return rule.color;
         }
     }
@@ -91,7 +91,7 @@ let drawStations = function (geojson) {
 // Temperatur
 let drawTemperature = function (geojson) {
     L.geoJSON(geojson, {
-        filter: function(geoJsonPoint) {
+        filter: function (geoJsonPoint) {
             if (geoJsonPoint.properties.LT > -50 && geoJsonPoint.properties.LT < 50) {
                 return true;
             }
@@ -101,13 +101,13 @@ let drawTemperature = function (geojson) {
                  <strong>${geoJsonPoint.properties.name}</strong>
                  (${geoJsonPoint.geometry.coordinates[2]}m)<br>
              `;
-             let color = getColor(
+            let color = getColor(
                 geoJsonPoint.properties.LT,
                 COLORS.temperature
-             );
-             console.log(geoJsonPoint.properties.LT, color);
+            );
+            console.log(geoJsonPoint.properties.LT, color);
 
-             // Provisorischer Marker: L.marker(latlng).addTo(map);
+            // Provisorischer Marker: L.marker(latlng).addTo(map);
             return L.marker(latlng, {
                 icon: L.divIcon({
                     className: "aws-div-icon",
@@ -119,9 +119,9 @@ let drawTemperature = function (geojson) {
 }
 
 // Schneehöhen 
-let drawSnowheight = function(geojson) {
+let drawSnowheight = function (geojson) {
     L.geoJSON(geojson, {
-        filter: function(geoJsonPoint) {
+        filter: function (geoJsonPoint) {
             if (geoJsonPoint.properties.HS > 0 && geoJsonPoint.properties.HS < 15000) {
                 return true;
             }
@@ -131,13 +131,13 @@ let drawSnowheight = function(geojson) {
                  <strong>${geoJsonPoint.properties.name}</strong>
                  (${geoJsonPoint.geometry.coordinates[2]}m)<br>
              `;
-             let color = getColor(
+            let color = getColor(
                 geoJsonPoint.properties.HS,
                 COLORS.snowheight
-             );
-             // console.log(geoJsonPoint.properties.LT, color);
+            );
+            // console.log(geoJsonPoint.properties.LT, color);
 
-             // Provisorischer Marker: L.marker(latlng).addTo(map);
+            // Provisorischer Marker: L.marker(latlng).addTo(map);
             return L.marker(latlng, {
                 icon: L.divIcon({
                     className: "aws-div-icon",
@@ -149,9 +149,9 @@ let drawSnowheight = function(geojson) {
 }
 
 // Wind
-let drawWind = function(geojson) {
+let drawWind = function (geojson) {
     L.geoJSON(geojson, {
-        filter: function(geoJsonPoint) {
+        filter: function (geoJsonPoint) {
             if (geoJsonPoint.properties.WG > 0 && geoJsonPoint.properties.WG < 15000) {
                 return true;
             }
@@ -161,13 +161,13 @@ let drawWind = function(geojson) {
                  <strong>${geoJsonPoint.properties.name}</strong>
                  (${geoJsonPoint.geometry.coordinates[2]}m)<br>
              `;
-             let color = getColor(
+            let color = getColor(
                 geoJsonPoint.properties.WG,
                 COLORS.wind
-             );
-             // console.log(geoJsonPoint.properties.LT, color);
+            );
+            // console.log(geoJsonPoint.properties.LT, color);
 
-             // Provisorischer Marker: L.marker(latlng).addTo(map);
+            // Provisorischer Marker: L.marker(latlng).addTo(map);
             return L.marker(latlng, {
                 icon: L.divIcon({
                     className: "aws-div-icon",
