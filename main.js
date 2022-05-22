@@ -218,5 +218,6 @@ async function loadData(url) {
     drawWind(geojson);
     drawHumidity(geojson);
 }
+
 // Server lässt Nutzung der Daten nicht zu: loadData("https://lawine.tirol.gv.at/data/produkte/ogd.geojson");
 loadData("https://static.avalanche.report/weather_stations/stations.geojson");
