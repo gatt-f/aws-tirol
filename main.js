@@ -250,6 +250,18 @@ async function loadData(url) {
     drawWind(geojson);
     drawHumidity(geojson);
 }
-
 // Server lässt Nutzung der Daten nicht zu: loadData("https://lawine.tirol.gv.at/data/produkte/ogd.geojson");
 loadData("https://static.avalanche.report/weather_stations/stations.geojson");
+
+// Rainviewer-Plugin
+// Change default options
+L.control.rainviewer({
+    position: 'bottomleft',
+    nextButtonText: '>',
+    playStopButtonText: 'Play/Stop',
+    prevButtonText: '<',
+    positionSliderLabelText: "Hour:",
+    opacitySliderLabelText: "Opacity:",
+    animationInterval: 500,
+    opacity: 0.5
+}).addTo(map);
