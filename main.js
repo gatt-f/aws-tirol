@@ -180,6 +180,33 @@ let drawWind = function (geojson) {
     }).addTo(overlays.wind);
 }
 
+// Relative Luftfeuchtigkeit
+let drawHumidity = function (geojson) {
+    L.geoJson(geojson, {
+        filter: function (geoJsonPoint) {
+            if (geoJsonPoint.properties.RH >= 0 && geoJsonPoint.properties.RH <= 100) {
+                return true;
+            }
+        },
+        pointToLayer: function (geoJsonPoint, latlng) {
+            let popup = `
+                <strong>${geoJsonPoint.properties.name}</strong><br>
+                (${geoJsonPoint.geometry.coordinates[2]}m)
+            `;
+            let color = getColor(geoJsonPoint.properties.RH,
+                COLORS.humidity
+            );
+            // console.log(RH);
+            return L.marker(latlng, {
+                icon: L.divIcon({
+                    className: "aws-div-icon",
+                    html: `<span style="background-color:${color}"> ${geoJsonPoint.properties.RH.toFixed(0)}</span>`
+                })
+            }).bindPopup(popup);
+        }
+    }).addTo(overlays.humidity);
+}
+
 // Wetterstationen
 async function loadData(url) {
     let response = await fetch(url);
