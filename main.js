@@ -73,15 +73,23 @@ let getColor = function (value, ramp) {
 let drawStations = function (geojson) {
     L.geoJSON(geojson, {
         pointToLayer: function (geoJsonPoint, latlng) {
+            // Temperatur-Abfrage
             let temperatur = ``
             if(typeof(geoJsonPoint.properties.LT) == "number")
             {
-                temperatur = `Temperatur: ${geoJsonPoint.properties.LT}°C`
+                temperatur = `Lufttemperatur: ${geoJsonPoint.properties.LT}(°C)<br>`
             }
+            let snowheight = ``
+            if(typeof(geoJsonPoint.properties.HS) == "number")
+            {
+                snowheight = `Schneehöhe: ${geoJsonPoint.properties.HS}(cm)<br>`
+            }
+            // Schneehöhe-Abfrage
             let popup = `
                 <strong>${geoJsonPoint.properties.name}</strong>
                 (${geoJsonPoint.geometry.coordinates[2]}m)<br>
                 ${temperatur}
+                ${snowheight}
             `;
             return L.marker(latlng, {
                 icon: L.icon({
