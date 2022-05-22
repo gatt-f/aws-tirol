@@ -107,6 +107,7 @@ let drawStations = function (geojson) {
                 ${wind}
                 ${winddir}
                 ${humidity}
+                <a href="https://wiski.tirol.gv.at/lawine/grafiken/1100/standard/dreitage/${geoJsonPoint.properties.plot}.png">Aktuelle Wetterverlaufsgrafik</a>
             `;
             return L.marker(latlng, {
                 icon: L.icon({
