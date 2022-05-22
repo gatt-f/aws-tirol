@@ -16,7 +16,7 @@ let startLayer = L.tileLayer("https://static.avalanche.report/tms/{z}/{x}/{y}.we
 let overlays = {
     stations: L.featureGroup(),
     temperature: L.featureGroup(),
-    precipitation: L.featureGroup(),
+    humidity: L.featureGroup(),
     snowheight: L.featureGroup(),
     wind: L.featureGroup(),
 };
