@@ -89,7 +89,19 @@ let drawStations = function (geojson) {
             let wind = ``
             if(geoJsonPoint.properties.WG > 0 && geoJsonPoint.properties.WG < 300)
             {
-                wind = `Windgeschwindigkeit: ${geoJsonPoint.properties.WG / 3.6}(km/h)<br>`
+                wind = `Windgeschwindigkeit: ${(geoJsonPoint.properties.WG * 3.6).toFixed(1)}(km/h)<br>`
+            }
+            // Windrichtung-Abfrage
+            let winddir = ``
+            if(geoJsonPoint.properties.WR >= 0 && geoJsonPoint.properties.WR <= 360)
+            {
+                winddir = `Windrichtung: ${geoJsonPoint.properties.WR.toFixed(1)}(°)<br>`
+            }
+            // Relative Luftfeuchtigkeit-Abfrage
+            let humidity = ``
+            if(geoJsonPoint.properties.RH >= 0 && geoJsonPoint.properties.RH <= 100)
+            {
+                humidity = `Relative Luftfeuchtigkeit: ${geoJsonPoint.properties.RH.toFixed(1)}(%)<br>`
             }
             let popup = `
                 <strong>${geoJsonPoint.properties.name}</strong>
@@ -97,6 +109,8 @@ let drawStations = function (geojson) {
                 ${temperatur}
                 ${snowheight}
                 ${wind}
+                ${winddir}
+                ${humidity}
             `;
             return L.marker(latlng, {
                 icon: L.icon({
