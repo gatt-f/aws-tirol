@@ -73,34 +73,30 @@ let getColor = function (value, ramp) {
 let drawStations = function (geojson) {
     L.geoJSON(geojson, {
         pointToLayer: function (geoJsonPoint, latlng) {
+            // Workload 8 - Franz Gatt
             // Temperatur-Abfrage
             let temperatur = ``
-            if(geoJsonPoint.properties.LT > -50 && geoJsonPoint.properties.LT < 50)
-            {
+            if (geoJsonPoint.properties.LT > -50 && geoJsonPoint.properties.LT < 50) {
                 temperatur = `Lufttemperatur: ${geoJsonPoint.properties.LT}(°C)<br>`
             }
             // Schneehöhe-Abfrage
             let snowheight = ``
-            if(geoJsonPoint.properties.HS > 0 && geoJsonPoint.properties.HS < 15000)
-            {
+            if (geoJsonPoint.properties.HS > 0 && geoJsonPoint.properties.HS < 15000) {
                 snowheight = `Schneehöhe: ${geoJsonPoint.properties.HS}(cm)<br>`
             }
             // Windgeschwindigkeit-Abfrage
             let wind = ``
-            if(geoJsonPoint.properties.WG > 0 && geoJsonPoint.properties.WG < 300)
-            {
+            if (geoJsonPoint.properties.WG > 0 && geoJsonPoint.properties.WG < 300) {
                 wind = `Windgeschwindigkeit: ${(geoJsonPoint.properties.WG * 3.6).toFixed(1)}(km/h)<br>`
             }
             // Windrichtung-Abfrage
             let winddir = ``
-            if(geoJsonPoint.properties.WR >= 0 && geoJsonPoint.properties.WR <= 360)
-            {
+            if (geoJsonPoint.properties.WR >= 0 && geoJsonPoint.properties.WR <= 360) {
                 winddir = `Windrichtung: ${geoJsonPoint.properties.WR.toFixed(1)}(°)<br>`
             }
             // Relative Luftfeuchtigkeit-Abfrage
             let humidity = ``
-            if(geoJsonPoint.properties.RH >= 0 && geoJsonPoint.properties.RH <= 100)
-            {
+            if (geoJsonPoint.properties.RH >= 0 && geoJsonPoint.properties.RH <= 100) {
                 humidity = `Relative Luftfeuchtigkeit: ${geoJsonPoint.properties.RH.toFixed(1)}(%)<br>`
             }
             let popup = `
