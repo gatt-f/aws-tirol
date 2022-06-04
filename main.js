@@ -96,7 +96,7 @@ let drawStations = function (geojson) {
             }
             // Relative Luftfeuchtigkeit-Abfrage
             let humidity = ``
-            if (geoJsonPoint.properties.RH >= 0 && geoJsonPoint.properties.RH <= 100) {
+            if (geoJsonPoint.properties.RH >= 0 && geoJsonPoint.properties.RH <= 150) {
                 humidity = `Relative Luftfeuchtigkeit: ${geoJsonPoint.properties.RH.toFixed(1)}(%)<br>`
             }
             let popup = `
