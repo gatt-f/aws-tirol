@@ -54,7 +54,7 @@ L.control.scale({
 L.control.fullscreen().addTo(map);
 
 // Wetterstationslayer beim Laden anzeigen
-overlays.temperature.addTo(map);
+overlays.stations.addTo(map);
 
 // Farben nach Wert und Schwellen ermitteln
 let getColor = function (value, ramp) {
